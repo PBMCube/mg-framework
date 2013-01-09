@@ -1,4 +1,4 @@
-window.onload = function () {
+function () {
     var connection = new WebSocket('ws://' + document.domain + ':8081');
     connection.onopen = function () {
         connection.send(playerName);
@@ -12,4 +12,4 @@ window.onload = function () {
     gamePick.addEventListener('click', function (e) {
         connection.send(chatIn.value);
     });
-};
+}

@@ -3,19 +3,20 @@
 <head>
     <meta charset="utf8">
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/chat.js"></script>
     <title>Mindgames</title>
 </head>
 <body>
-    <input id="chatInput" type="text" width="30"><br>
-    <input id="chatSubmit" type="button" value="Send">
-
-    <a href='game.html' id="startNewGame"> Start New Game! </a>
-    <div id="chatArea">
-    </div>
-
-    <div id="gamelist">
-
-    </div>
+    <form id="app-login" action="/lobby">
+        <fieldset>
+            <legend>Login Details</legend>
+            <div>
+                <label for="user-name">Username:</label>
+                <input name="user-name" type="text" placeholder="Pick a name!" required autofocus>
+            </div>
+            <div>
+                <input name="login" type="submit" value="Login">
+            </div>
+        </fieldset>
+    </form>
 </body>
 </html>

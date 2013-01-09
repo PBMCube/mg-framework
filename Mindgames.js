@@ -8,8 +8,12 @@
  */
 
 
-var Server = require('./lib/Server').Server;
-var Lobby = require('./lib/Lobby').Lobby;
+var app = {
+    Server: require('./lib/Server').Server,
+    Lobby: require('./lib/Lobby').Lobby,
+    PlayerManager: require('./lib/PlayerManager.js').PlayerManager 
+};
 
-Server.start();
-Lobby.start(8081);
+app.PlayerManager.init(app);
+app.Server.start(app);
+app.Lobby.start(8081, app);
