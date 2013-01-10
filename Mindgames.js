@@ -8,12 +8,17 @@
  */
 
 
-var app = {
-    Server: require('./lib/Server').Server,
-    Lobby: require('./lib/Lobby').Lobby,
-    PlayerManager: require('./lib/PlayerManager.js').PlayerManager 
-};
+var PlayerManagerClass = require('./lib/PlayerManager.js').PlayerManager;
+var ServerClass = require('./lib/Server.js').Server;
+var LobbyClass = require('./lib/Lobby.js').Lobby;
 
-app.PlayerManager.init(app);
-app.Server.start(app);
-app.Lobby.start(8081, app);
+function app () {
+    var self = this;
+    this.Server = new ServerClass(9003, this),
+    this.Lobby = new LobbyClass(8081, this),
+    this.PlayerManager = new PlayerManagerClass(this)
+}
+
+app();
+
+
