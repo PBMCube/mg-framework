@@ -1,5 +1,5 @@
 function () {
-    var connection = new WebSocket('ws://' + document.domain + ':8081');
+    var connection = new WebSocket('ws://' + document.domain + ':8082');
     connection.onopen = function () {
         connection.send(playerName);
     };
