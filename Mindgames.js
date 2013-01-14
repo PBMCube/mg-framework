@@ -20,10 +20,10 @@ var LobbyClass = require('./lib/Lobby.js').Lobby;
 var GameServerClass = require('./lib/GameServer.js').GameServer;
 
 function Mindgames (serverPort, lobbyPort, gameServerPort) {
-    this.Server = new ServerClass(serverPort, this),
-    this.Lobby = new LobbyClass(lobbyPort, this),
-    this.PlayerManager = new PlayerManagerClass(this),
-    this.GameServer = new GameServerClass(gameServerPort, this)
+    this.Server = ServerClass(serverPort, this),
+    this.Lobby = LobbyClass(lobbyPort, this),
+    this.PlayerManager = PlayerManagerClass(this),
+    this.GameServer = GameServerClass(gameServerPort, this)
 }
 
 //Start'r off!

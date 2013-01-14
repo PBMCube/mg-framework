@@ -1,6 +1,5 @@
 window.onload = function () {
     var connection = new WebSocket('ws://' + document.domain + ':8081');
-    var chatArea = document.getElementById('chatArea');
     connection.onopen = function () {
     };
     connection.onmessage = function (e) {
@@ -10,8 +9,10 @@ window.onload = function () {
         console.log('Websocketz errorz! ' + error);
     }
 
+    var chatArea = document.getElementById('chatArea');
     var chatSub = document.getElementById('chatSubmit');
     var chatIn = document.getElementById('chatInput');
+    var chatView = [];
 
     var queryStringObj  = parseQueryString(window.location.toString());
     var name = queryStringObj['user-name'];
@@ -32,7 +33,12 @@ window.onload = function () {
     chatSub.addEventListener('click', chatSubmit);
 
     function newMessage(message) {
-        chatArea.innerHTML += '<br>' + message;
+        chatView.push('<br>' + message);
+        if (chatView.length > 15) {
+            chatView.shift();
+        }
+        chatArea.innerHTML = chatView.join('');
+        console.log(chatView);
     }
 };
 
