@@ -1,9 +1,16 @@
 window.onload = function () {
-    var connection = new WebSocket('ws://' + document.domain + ':8081');
+    var thisPlayer;
+    var connection = new WebSocket('ws://' + document.domain + ':8082');
+    var url = window.location.toString();
     connection.onopen = function () {
+
+        connection.send(JSON.stringify({'p': {'name':parseQueryString(url)['name']}}));
+        connection.send(JSON.stringify({'c':true}));
     };
     connection.onmessage = function (e) {
-        newMessage(e.data);
+        var obj = JSON.parse(e.data);
+        console.log(obj);
+        newMessage(obj['c']);
     };
     connection.onerror = function (error) {
         console.log('Websocketz errorz! ' + error);
@@ -15,12 +22,11 @@ window.onload = function () {
     var chatView = [];
 
     var queryStringObj  = parseQueryString(window.location.toString());
-    var name = queryStringObj['user-name'];
 
     function chatSubmit () {
         if (chatIn.value !== '') {
-            connection.send(chatIn.value);
-            newMessage(name + ': ' + chatIn.value);
+            connection.send(JSON.stringify({'c':chatIn.value}));
+            newMessage(thisPlayer.name + ': ' + chatIn.value);
             chatIn.value = '';
         }
     }
@@ -38,8 +44,11 @@ window.onload = function () {
             chatView.shift();
         }
         chatArea.innerHTML = chatView.join('');
-        console.log(chatView);
     }
+
+    var gameLink = document.getElementById('gameLink');
+    gameLink.addEventListener('click', function (e) {
+    });
 };
 
 function parseQueryString(url) {
