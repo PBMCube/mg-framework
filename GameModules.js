@@ -11,15 +11,11 @@
  */
 
 
-var RPS = require('./games/RPS.js').RPS;
+var RPS = require('./games/RPS_core.js').RPS;
 
-var GameModules = function () {
-    var self = {};
+var GameModules = {};
 
-    // Register your game here.
-    self['rps'] = RPS;
-
-    return self;
-};
+// Register games here.
+GameModules['rps'] = RPS;
 
 exports.GameModules = GameModules;

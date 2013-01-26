@@ -15,7 +15,7 @@ var RPS = function (Game) {
 
     // These vars describe attributes of the game.
     // Update interval measured in multiples of 33 frames per second. If
-    // negative, updates are only broadcast with explicit Game.broadcastState
+    // negative, updates are only broadcast with explicit Game.send
     // calls.
     self.updateInterval = -1;
     self.gameState = {};
