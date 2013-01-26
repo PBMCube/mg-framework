@@ -15,7 +15,6 @@
 
 // Mindgames libs
 var GameClass = require('./Game.js').Game;
-var ClientID = require('./Tools.js').ClientID;
 
 // Module vars (like protected static class vars)
 

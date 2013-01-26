@@ -14,8 +14,7 @@
 var WebSocketServer = require('ws').Server;
 
 // Mindgames libs
-var ClientID = require('./Tools.js').ClientID,
-    WSRouter = require('./server_lib/WSRouter.js').WSRouter,
+var WSRouter = require('./server_lib/WSRouter.js').WSRouter,
     LobbyClass = require('./Lobby.js').Lobby,
     PlayerManagerClass = require('./PlayerManager.js').PlayerManager,
     GameManagerClass = require('./GameManager.js').GameManager;

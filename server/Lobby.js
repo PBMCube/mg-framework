@@ -16,7 +16,6 @@ var WebSocketServer = require('ws').Server,
     util            = require('util');
 
 // Mindgames libs
-var ClientID = require('./Tools.js').ClientID;
 
 // Module vars (like protected static class vars)
 var Mindgames = {};

@@ -14,7 +14,7 @@
 // Node modules
 
 // Mindgames libs
-var ClientID = require('./Tools.js').ClientID;
+var ClientID = require('./ClientID.js').ClientID;
 // Module vars (like protected static class vars)
 
 // Module functions (like protected static class methods)

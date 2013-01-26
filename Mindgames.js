@@ -17,8 +17,8 @@
  *
  */
 
-var HTTPServerClass = require('./lib/HTTPServer.js').Server;
-var MindgamesServerClass = require('./lib/MindgamesServer.js').MindgamesServer;
+var HTTPServerClass = require('./server/HTTPServer.js').Server;
+var MindgamesServerClass = require('./server/MindgamesServer.js').MindgamesServer;
 
 function Mindgames (httpServerPort, gameServerPort) {
     this.HTTPServer = HTTPServerClass(httpServerPort, this),

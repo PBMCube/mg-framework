@@ -23,11 +23,10 @@
  */
 
 // Node modules
-var events = require('events');
 
 // Mindgames libs
 var GameModules = require('./../GameModules.js').GameModules;
-var ClientID = require('./Tools.js').ClientID;
+var ClientID = require('./ClientID.js').ClientID;
 
 // Module functions (like protected static class methods)
 
