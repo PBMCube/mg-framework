@@ -20,7 +20,7 @@ var supportedMethods = {
 };
 
 
-var Router = function(app) {
+var Router = function (app) {
     var self = {};
     self.app = app;
     self.Handler = HandlerClass(app);
@@ -39,10 +39,10 @@ var Router = function(app) {
                 // POST (and PUT/UPDATE) need special handling to accomodate the
                 // associated data coming in.
                 if (request.method === 'POST') {
-                    request.addListener('data', function(postDataChunk) {
+                    request.addListener('data', function (postDataChunk) {
                         postData += postDataChunk;
                     });
-                    request.addListener('end', function() {
+                    request.addListener('end', function () {
                         self.Handler.handle[requestName](response, urlData, postData);
                     });
                 } else {

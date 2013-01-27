@@ -14,18 +14,19 @@
 // Node modules
 
 // Mindgames libs
-var GameClass = require('./Game.js').Game;
+var GameClass = require('./../shared/Game.js').Game;
+var ClientID = require('./ClientID.js').ClientID;
 
 // Module vars (like protected static class vars)
 
 // Module functions (like protected static class methods)
 // Class definition
-var GameManager = function(MindgamesServer) {
+var GameManager = function (MindgamesServer) {
     var self = {};
 
     //private vars
     var _games = {};
-    self.newMessage = function (origin, message) {
+    self.newMessage = function (message, origin) {
         console.log('got a message for GM!');
         console.log(message);
         if (typeof message.ID == 'number') {
@@ -34,12 +35,13 @@ var GameManager = function(MindgamesServer) {
             self.newGame(origin, 'rps');
         }
     };
-    self.newGame = function(creator, type) {
-        var newGame = GameClass(creator, type, MindgamesServer);
-        _games[newGame.ID] = newGame;
+    self.newGame = function (creator, type) {
+        var newGameID = ClientID.assignNew('game');
+        var newGame = GameClass(creator, type, MindgamesServer, newGameID);
+        _games[newGameID] = newGame;
     };
 
-    self.removeGame = function(game) {
+    self.removeGame = function (game) {
         delete _games[game.ID];
     }
     return self;

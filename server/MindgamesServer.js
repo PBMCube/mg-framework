@@ -14,7 +14,7 @@
 var WebSocketServer = require('ws').Server;
 
 // Mindgames libs
-var WSRouter = require('./server_lib/WSRouter.js').WSRouter,
+var MessageRouterClass = require('./../shared/MessageRouter.js').MessageRouter,
     LobbyClass = require('./Lobby.js').Lobby,
     PlayerManagerClass = require('./PlayerManager.js').PlayerManager,
     GameManagerClass = require('./GameManager.js').GameManager;
@@ -22,26 +22,26 @@ var WSRouter = require('./server_lib/WSRouter.js').WSRouter,
 // Module vars (like protected static class vars)
 
 // Module functions (like protected static class methods)
-var MindgamesServer = function(wsport, app) {
+var MindgamesServer = function (wsport, app) {
     var self = {};
     var wss = new WebSocketServer({port:wsport}); 
     self.Lobby = LobbyClass(self);
     self.PlayerManager = PlayerManagerClass(self);
     self.GameManager = GameManagerClass(self);
 
-    var wsRouter = WSRouter(self.Lobby, self.PlayerManager, self.GameManager);
+    var messageRouter = MessageRouterClass(self.Lobby, self.PlayerManager, self.GameManager);
 
     // Lobby/game uses this to send messages back out to players
+    // message: object with data to be JSON-ified and sent
     // to: array of players to send to
     // from: player object that message is coming from
-    // message: object with data to be JSON-ified and sent
-    self.send = function (to, from, message) {
+
+    self.send = function (message, to, from) {
         // A server message
         if (from === null) {
             from = {ID:-1};
         }
         var msgText = JSON.stringify(message);
-        console.log("message: " + msgText);
         if (typeof msgText === undefined) {
             console.log(message);
         }
@@ -55,12 +55,12 @@ var MindgamesServer = function(wsport, app) {
     };
 
     //WebSocketServer event handlers
-    wss.on('connection', function(ws) {
+    wss.on('connection', function (ws) {
         var player = self.PlayerManager.register(ws);
 
         // Messages for the message router~!
         ws.on('message', function (message) {
-            wsRouter.route(player, message);
+            messageRouter.route(message, player);
         });
 
         ws.on('close', function () {

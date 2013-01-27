@@ -54,7 +54,7 @@
             //console.log('game frame: ' + n);
         };
 
-        self.onPlayerJoined = function(player) {
+        self.onPlayerJoined = function (player) {
             console.log("Hello " + player.name);
             players.ingamePlayers++;
             players[player.ID] = {
@@ -65,14 +65,17 @@
             }
         };
 
-        self.onPlayerLeft = function(player) {
+        self.onPlayerLeft = function (player) {
             console.log("goodbye " + player.name);
         };
 
-        self.onSpectatorJoined = function(player) {
+        self.onSpectatorJoined = function (player) {
         };
 
-        self.onSpectatorLeft = function(player) {
+        self.onSpectatorLeft = function (player) {
+        };
+
+        self.onPlayerMessage = function (message, playerID) {
         };
 
         return self;

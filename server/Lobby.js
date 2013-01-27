@@ -26,39 +26,39 @@ var chatHistLimit = 15;
 // Module functions (like protected static class methods)
 
 // Class definition
-var Lobby = function(MindgamesServer) {
+var Lobby = function (MindgamesServer) {
     var self = {};
     var playersInLobby = [];
 
-    self.newMessage = function (origin, message) {
+    self.newMessage = function (message, origin) {
         if (message === true) {
             self.playerJoined(origin);
         } else if (message === false) {
             self.playerLeft(origin);
         } else {
-            chatSend(origin, message);
+            chatSend(message, origin);
         }
     };
 
     self.playerJoined = function (player) {
         playersInLobby[playersInLobby.length] = player;
-        MindgamesServer.send([player], null, {'c':chatHistory});
+        MindgamesServer.send({'c':chatHistory}, [player], null);
         var name = (typeof player.name) === 'undefined' ? "Unnamed Player" : player.name;
-        chatSend(player, "joined the chat.");
+        chatSend("joined the chat.", player);
     };
 
     self.playerLeft = function (player) {
         playersInLobby.splice(playersInLobby.indexOf(player), 1);
-        chatSend(player, player.name + " left the chat.");
+        chatSend(player.name + " left the chat.", player);
     };
 
-    function chatSend(origin, message) {
+    function chatSend(message, origin) {
         var dateObj = new Date();
         var completeMessage = "[" + dateObj.toTimeString().substring(0, 8) + "] " + origin.name + ": " + message;
         chatHistory.push(completeMessage);
         var wsMessage = {'c': completeMessage};
         // null is for message from the server
-        MindgamesServer.send(playersInLobby, null, wsMessage);
+        MindgamesServer.send(wsMessage, playersInLobby, null);
     }
     return self;
 };

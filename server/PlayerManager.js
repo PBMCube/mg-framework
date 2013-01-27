@@ -14,7 +14,8 @@
 // Node modules
 
 // Mindgames libs
-var PlayerClass = require('./Player.js').Player;
+var PlayerClass = require('./../shared/Player.js').PlayerClass;
+var ClientID = require('./ClientID.js').ClientID;
 
 // Module vars (like protected static class vars)
 
@@ -36,12 +37,13 @@ var PlayerManager = function (MindgamesServer) {
     // Public interface 
     self.register = function (ws) {
         var newPlayer = PlayerClass(ws);
-        MindgamesServer.send([newPlayer], null, {'p':{'ID': newPlayer.ID}});
+        newPlayer.ID = ClientID.assignNew('player');
+        MindgamesServer.send({'p':{'ID': newPlayer.ID}}, [newPlayer], null);
         _players[newPlayer.ID] = newPlayer;
         return newPlayer;
     };
 
-    self.newMessage = function (origin, message) {
+    self.newMessage = function (message, origin) {
         for (prefix in message) {
             if (prefix in internalRouting) {
                 internalRouting[prefix](origin, message[prefix]);

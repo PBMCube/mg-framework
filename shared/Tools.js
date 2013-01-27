@@ -9,13 +9,14 @@
 
 (function () {
     // This is to allow this module to live on either client or server side.
+    var namespace;
     if (typeof require === 'undefined') {
         if (typeof window.MG === 'undefined') {
             window.MG = {};
         }
-        var namespace = window.MG;
+        namespace = window.MG;
     } else {
-        var namespace = exports;
+        namespace = exports;
     }
     namespace.ArrayTools = {};
     /**

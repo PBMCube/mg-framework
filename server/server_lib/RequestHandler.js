@@ -18,12 +18,18 @@ var sys         = require('sys'),
 var ErrorResponse   = require('./ErrorResponse.js').ErrorResponse;
 
 // Module vars (like protected static class vars)
-var allowedExtensions = {
+var knownExtensions = {
     '.js': 'text/javascript',
     '.css': 'text/css',
-    '.html': 'text/html',
-    '.ics' : 'text/calendar'
+    '.html': 'text/html'
 };
+
+var allowedDirs = {
+    'public': true,
+    'games': true,
+    'shared': true
+};
+
 var Mindgames = {};
 
 //class definition
@@ -34,13 +40,14 @@ var Handler = function (app) {
     //Private methods
     var _serveStatic = function (response, urlToServe) {
         // Basic security - don't let a URL start navigating the filesystem
-        var sanitizedURL = urlToServe.replace(/\.{2}/g, 'NO');
-        var filePath = 'public' + sanitizedURL;
+        var sanitizedURL = urlToServe.replace(/\.{2}/g, 'NO').substring(1);
+        // Make sure that the request is for a dir we're ok accessing.
+        var dir = sanitizedURL.split("/")[0];
+        var filePath = dir in allowedDirs ? sanitizedURL : '';
         var ext = path.extname(filePath);
 
         // js is as cool as Lua! 
-        var contentType = allowedExtensions[ext] || 'text/plain';
-
+        var contentType = knownExtensions[ext] || 'text/plain';
         fs.exists(filePath, function (exists) {
             if (exists) {
                 fs.readFile(filePath, function (error, content) {
@@ -61,16 +68,11 @@ var Handler = function (app) {
     };
 
     var _landingPage = function (response, urlData) {
-        _serveStatic(response, '/index.html');
+        _serveStatic(response, '/public/splash.html');
     };
 
     var _showLobby = function (response, urlData) {
-        _serveStatic(response, '/chat.html');
-    };
-
-    var _startGame = function (response, urlData) {
-        Mindgames.GameServer.newGame('rps');
-        _serveStatic(response, '/game.html');
+        _serveStatic(response, '/public/mindgames.html');
     };
 
     // Public interface
@@ -81,7 +83,6 @@ var Handler = function (app) {
     // GET
     self.handle['GET/'] = _landingPage;
     self.handle['GET/lobby'] = _showLobby;
-    self.handle['GET/game'] = _startGame;
     return self;
 };
 
