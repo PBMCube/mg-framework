@@ -38,6 +38,7 @@ var Lobby = function (MindgamesServer) {
     };
 
     self.removePlayer = function(player) {
+        console.log(player.name + " left the chat");
         playersInLobby.splice(playersInLobby.indexOf(player), 1);
         chatSend(player.name + " left the chat.", player);
     };

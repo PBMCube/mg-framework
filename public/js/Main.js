@@ -8,8 +8,13 @@
     self.Chat = MG.ChatClass(self);
     self.GameManager = MG.RouterClass();
     self.GameManager.routingTable = {'g': function(msg) {console.log(msg);}};
+    self.GameManager.moduleName = 'GameManager';
     self.PlayerHandler = MG.RouterClass();
-    self.PlayerHandler.routingTable = {'p': function(msg) {console.log(msg);}};
+    self.PlayerHandler.routingTable = {
+        'p': function(msg) {console.log(msg);},
+        'ID': function(msg) {self.Player.ID = msg; console.log(self.Player.ID);}
+    };
+    self.PlayerHandler.moduleName = 'PlayerHandler';
 
     var messageRouter = MG.MessageRouter(self.Chat, self.PlayerHandler, self.GameManager);
 

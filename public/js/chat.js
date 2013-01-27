@@ -9,11 +9,12 @@
     }
 
     window.MG.ChatClass = function (MGClient) {
-        var self = {};
+        var self = window.MG.RouterClass();
+        self.moduleName = 'Chat';
         self.routingTable = {
-            'msg':self.newMessage
+            'msg' : newMessage
         };
-        self.newMessage = function (message) {
+        function newMessage (message) {
             if (typeof message === 'object') {
                 message.forEach(function (item) { 
                     chatView.push('<br>' + item);
