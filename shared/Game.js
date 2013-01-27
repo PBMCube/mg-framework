@@ -28,7 +28,9 @@
 (function () {
     // Dependencies
     var GameModules;
-    // This is to allow this module to live on either client or server side.
+    // Protected static variables (shared amongst instances of this class)
+    var moduleName = 'Game';
+    // Namespace setup to allow code sharing between client and server
     var namespace;
     if (typeof require === 'undefined') {
         if (typeof window.MG === 'undefined') {

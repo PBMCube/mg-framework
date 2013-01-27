@@ -42,13 +42,12 @@ var MindgamesServer = function (wsport, app) {
             from = {ID:-1};
         }
         var msgText = JSON.stringify(message);
-        if (typeof msgText === undefined) {
+        if (typeof msgText === "undefined") {
+            console.log('undefined message in MindgamesServer send');
             console.log(message);
         }
         to.forEach(function (destination) {
-            console.log(destination.ID + " -- " + from.ID);
             if (destination !== from) {
-                console.log('sending message to: ' + destination.ID);
                 destination.socket.send(msgText);
             } 
         });
@@ -64,7 +63,7 @@ var MindgamesServer = function (wsport, app) {
         });
 
         ws.on('close', function () {
-            self.Lobby.playerLeft(player);
+            self.Lobby.removePlayer(player);
             self.PlayerManager.remove(player)
         });
     });

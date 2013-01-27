@@ -16,24 +16,26 @@
 // Mindgames libs
 var PlayerClass = require('./../shared/Player.js').PlayerClass;
 var ClientID = require('./ClientID.js').ClientID;
+var RouterClass = require('./../shared/Router.js').RouterClass;
 
 // Module vars (like protected static class vars)
+var moduleName = 'PlayerManager';
 
 // Module functions (like protected static class methods)
 
 // Class definition
 var PlayerManager = function (MindgamesServer) {
-    var self = {};
-    var setPlayerName = function (player, name) {
+    var self = RouterClass();
+    self.moduleName = moduleName;
+    var setPlayerName = function (name, player) {
         player.name = name;
+    };
+    self.routingTable = {
+        'name' : setPlayerName
     };
 
     // Private vars
     var _players = {};
-    var internalRouting = {
-        'name' : setPlayerName
-    };
-
     // Public interface 
     self.register = function (ws) {
         var newPlayer = PlayerClass(ws);
@@ -42,17 +44,6 @@ var PlayerManager = function (MindgamesServer) {
         _players[newPlayer.ID] = newPlayer;
         return newPlayer;
     };
-
-    self.newMessage = function (message, origin) {
-        for (prefix in message) {
-            if (prefix in internalRouting) {
-                internalRouting[prefix](origin, message[prefix]);
-            } else {
-                console.log('unknown message prefix in PlayerManager: ' + prefix);
-            }
-        }
-    };
-
 
     self.remove = function (player) {
         player.socket = '';

@@ -12,7 +12,10 @@
  */
 
 (function () {
-    // This is to allow this module to live on either client or server side.
+    // Dependencies
+    // Protected static variables (shared amongst instances of this class)
+    var moduleName = 'Player';
+    // Namespace setup to allow code sharing between client and server
     var namespace;
     if (typeof require === 'undefined') {
         if (typeof window.MG === 'undefined') {

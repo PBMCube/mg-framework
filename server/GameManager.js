@@ -1,5 +1,5 @@
 /*
- * Filename: Lobby.js
+ * Filename: GameManager.js
  * Mindgames Game Manager module
  * Author: Ben Tyler
  * Date: Jan 9, 2013
@@ -16,34 +16,36 @@
 // Mindgames libs
 var GameClass = require('./../shared/Game.js').Game;
 var ClientID = require('./ClientID.js').ClientID;
+var RouterClass = require('./../shared/Router.js').RouterClass;
 
 // Module vars (like protected static class vars)
+var moduleName = 'GameManager';
 
 // Module functions (like protected static class methods)
 // Class definition
 var GameManager = function (MindgamesServer) {
-    var self = {};
+    var self = RouterClass();
+    self.moduleName = moduleName;
+
+    self.routingTable = {
+        'game': function (message, origin) {},
+        'new': newGame,
+        'end': removeGame
+    };
 
     //private vars
     var _games = {};
-    self.newMessage = function (message, origin) {
-        console.log('got a message for GM!');
-        console.log(message);
-        if (typeof message.ID == 'number') {
-            _games[message.ID].newMessage(origin, message);
-        } else if (message.ID === 'newGame') {
-            self.newGame(origin, 'rps');
-        }
-    };
-    self.newGame = function (creator, type) {
+
+    function newGame (type, creator) {
         var newGameID = ClientID.assignNew('game');
         var newGame = GameClass(creator, type, MindgamesServer, newGameID);
         _games[newGameID] = newGame;
     };
 
-    self.removeGame = function (game) {
+    function removeGame (game) {
         delete _games[game.ID];
     }
+
     return self;
 };
 

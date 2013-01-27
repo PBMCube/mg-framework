@@ -10,6 +10,9 @@
 
     window.MG.ChatClass = function (MGClient) {
         var self = {};
+        self.routingTable = {
+            'msg':self.newMessage
+        };
         self.newMessage = function (message) {
             if (typeof message === 'object') {
                 message.forEach(function (item) { 
@@ -29,7 +32,7 @@
 
         function chatSubmit () {
             if (chatIn.value !== '') {
-                MGClient.send({'c':chatIn.value});
+                MGClient.send({'c':{'msg':chatIn.value}});
                 chatIn.value = '';
             }
         }

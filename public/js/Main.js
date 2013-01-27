@@ -6,10 +6,11 @@
 
     self.Player = MG.PlayerClass(ws);
     self.Chat = MG.ChatClass(self);
-    self.GameManager = {};//MG.GameManagerClass(self);
-    self.GameManager.newMessage = function (msg) {console.log("GM message", msg)};
-    self.PlayerHandler = {};
-    self.PlayerHandler.newMessage = function (msg) {self.Player.ID = msg.ID};
+    self.GameManager = MG.RouterClass();
+    self.GameManager.routingTable = {'g': function(msg) {console.log(msg);}};
+    self.PlayerHandler = MG.RouterClass();
+    self.PlayerHandler.routingTable = {'p': function(msg) {console.log(msg);}};
+
     var messageRouter = MG.MessageRouter(self.Chat, self.PlayerHandler, self.GameManager);
 
     var url = window.location.toString();
@@ -26,7 +27,7 @@
 
     ws.onopen = function () {
         self.send({'p': {'name':self.Player.name}});
-        self.send({'c': true});
+        self.send({'c': {'join':true}});
     };
 
     ws.onmessage = function (e) {
