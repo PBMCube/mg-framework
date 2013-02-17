@@ -14,10 +14,10 @@
         if (typeof window.MG === 'undefined') {
             window.MG = {};
         }
-        var ArrayTools = window.MG.ArrayTools;
+        var Tools = window.MG.Tools;
         var namespace = window.MG;
     } else {
-        var ArrayTools = require('./../shared/Tools.js').ArrayTools;
+        var Tools = require('./../shared/Tools.js').Tools;
         var namespace = exports;
     }
 
@@ -41,7 +41,7 @@
         var pointValues = [25, 15, 5];
 
         self.onGameStart = function () {
-            ArrayTools.shuffle(pointValues);
+            Tools.shuffle(pointValues);
             self.gameState['round'] = 0;
             self.gameState['player1move'] = '';
             self.gameState['player2move'] = '';

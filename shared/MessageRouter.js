@@ -19,9 +19,6 @@
     // Namespace setup to allow code sharing between client and server
     var namespace;
     if (typeof require === 'undefined') {
-        if (typeof window.MG === 'undefined') {
-            window.MG = {};
-        }
         namespace = window.MG;
         RouterClass = window.MG.RouterClass;
     } else {

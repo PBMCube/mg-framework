@@ -10,7 +10,7 @@
     <input id="chatInput" type="text" width="30" autofocus><br>
     <input id="chatSubmit" type="button" value="Send">
 
-    <a id='newGame' href="#"> Start New Game~~!</a>
+    <a id='newGame' href="../games/RPS.html">Start/join game</a>
     <div id="chatArea">
 
     </div>
@@ -18,11 +18,18 @@
     <div id="gamelist">
 
     </div>
+    <script>
+        (function () {
+            window.MG = {};
+        })();
+    </script>
     <script src="shared/Router.js"></script>
     <script src="shared/Tools.js"></script>
     <script src="shared/MessageRouter.js"></script>
     <script src="shared/Game.js"></script>
     <script src="shared/Player.js"></script>
+    <script src="public/js/GameManager.js"></script>
+    <script src="public/js/PlayerHandler.js"></script>
     <script src="public/js/Chat.js"></script>
     <script src="public/js/Main.js"></script>
 </body>

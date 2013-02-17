@@ -8,8 +8,7 @@
  */
 
 // Node modules
-var sys         = require('sys'),
-    fs          = require('fs'),
+var fs          = require('fs'),
     path        = require('path'),
     http        = require('http'),
     querystring = require('querystring');

@@ -8,9 +8,6 @@
     // Namespace setup to allow code sharing between client and server
     var namespace;
     if (typeof require === 'undefined') {
-        if (typeof window.MG === 'undefined') {
-            window.MG = {};
-        }
         namespace = window.MG;
     } else {
         namespace = exports;
@@ -19,6 +16,7 @@
     namespace.RouterClass = function () {
         var self = {};
         self.routeMsg = function (message, origin) {
+            // Log here if there are routing-related issues. 
             for (prefix in message) {
                 if (prefix in self.routingTable) {
                     self.routingTable[prefix](message[prefix], origin);
