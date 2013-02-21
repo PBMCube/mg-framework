@@ -9,10 +9,10 @@
  * game-specific rulesets (like rock paper scissors, Mindgames, or whatever)
  * and the rest of the app. A typical process goes like this:
  *
- * GameManager will instantiate Game, Now, when GameServer gets WS messages 
- * with the appropriate game ID, it will pass them along to that game. Game 
+ * GameManager will instantiate Game, Now, when GameServer/Main get WS messages 
+ * with the appropriate game ID, GameManager will pass them along to that game. Game 
  * will parse the messages and call functions (call-ins, from the perspective
- * of the game modeul) in the game module, which implements the game logic.
+ * of the game module) in the game module, which implements the game logic.
  * The game module will update the state of the game and send the updated state 
  * of the game back to the Players in the game.
  *  
@@ -28,6 +28,8 @@
 (function () {
     // Dependencies
     var GameModules;
+    var RouterClass;
+
     // Protected static variables (shared amongst instances of this class)
     var moduleName = 'Game';
     // Namespace setup to allow code sharing between client and server
@@ -35,14 +37,21 @@
     if (typeof require === 'undefined') {
         namespace = window.MG;
         GameModules = window.MG.GameModules;
+        RouterClass = window.MG.RouterClass;
     } else {
         namespace = exports;
         GameModules = require('./../GameModules.js').GameModules;
+        RouterClass = require('./Router.js').RouterClass;
     }
 
     namespace.Game = function(creator, type, appInterface, ID) {
         // Private vars
-        var self = {};
+        var self = RouterClass();
+        self.routingTable = {
+            'move' : playerMove,
+            'update' : updateState
+        };
+
         var players = [];
         var spectators = [];
         // The gameMod is a rules engine for the given gametype
@@ -52,6 +61,14 @@
         self.ID = ID;
         self.owner = creator;
         self.gameFrame = 0;
+
+        function playerMove (msg) {
+
+        }
+
+        function updateState (msg) {
+
+        }
 
         // These define the call-ins that the game module can use as triggers.
         self.addPlayer = function(playerToAdd) {

@@ -29,11 +29,8 @@ var allowedDirs = {
     'shared': true
 };
 
-var Mindgames = {};
-
 //class definition
-var Handler = function (app) {
-    Mindgames = app;
+var Handler = function () {
     var self = {};
     
     //Private methods

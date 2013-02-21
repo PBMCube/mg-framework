@@ -26,14 +26,13 @@
         RouterClass = require('./Router.js').RouterClass;
     }
 
-    namespace.MessageRouter = function (Lobby, PlayerManager, GameManager) {
+    namespace.MessageRouter = function (components) {
         var self = RouterClass();
         self.moduleName = moduleName;
-        self.routingTable = {
-            'c' : Lobby.routeMsg,  
-            'g' : GameManager.routeMsg,
-            'p' : PlayerManager.routeMsg
-        };
+        self.routingTable = {};
+        for (prefix in components) {
+            self.routingTable[prefix] = components[prefix].routeMsg;
+        }
         self.route = function (message, origin) {
             try {
                 var messageObj = JSON.parse(message);

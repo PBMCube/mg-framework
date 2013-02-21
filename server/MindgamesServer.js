@@ -29,7 +29,13 @@ var MindgamesServer = function (wsport, app) {
     self.PlayerManager = PlayerManagerClass(self);
     self.GameManager = GameManagerClass(self);
 
-    var messageRouter = MessageRouterClass(self.Lobby, self.PlayerManager, self.GameManager);
+    var components = {
+        'c': self.Lobby, 
+        'p': self.PlayerManager, 
+        'g': self.GameManager
+    };
+
+    var messageRouter = MessageRouterClass(components);
 
     // Lobby/game uses this to send messages back out to players
     // message: object with data to be JSON-ified and sent

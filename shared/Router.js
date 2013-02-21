@@ -15,13 +15,22 @@
 
     namespace.RouterClass = function () {
         var self = {};
+        self.routingTable = {
+            'unimplemented' : function () {
+                console.log('Unimplemented routingTable in user of RouterClass: ' + self.moduleName);
+            }
+        };
         self.routeMsg = function (message, origin) {
             // Log here if there are routing-related issues. 
             for (prefix in message) {
                 if (prefix in self.routingTable) {
                     self.routingTable[prefix](message[prefix], origin);
                 } else {
-                    console.log('unknown message prefix in ' + self.moduleName + ': ' + prefix);
+                    if ('unimplemented' in self.routingTable) {
+                        self.routingTable['unimplemented']();
+                    } else {
+                        console.log('unknown message routing prefix in ' + self.moduleName + ': ' + prefix);
+                    }
                 }
             }
         };

@@ -20,10 +20,9 @@ var supportedMethods = {
 };
 
 
-var Router = function (app) {
+var Router = function () {
     var self = {};
-    self.app = app;
-    self.Handler = HandlerClass(app);
+    self.Handler = HandlerClass();
 
     // Private methods
     var _route = function (request, response) {

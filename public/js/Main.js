@@ -9,7 +9,13 @@
     self.PlayerHandler = MG.PlayerHandlerClass(self.Player);
     self.GameManager = MG.GameManagerClass();
 
-    var messageRouter = MG.MessageRouter(self.Chat, self.PlayerHandler, self.GameManager);
+    var components = {
+        'c':self.Chat,
+        'p':self.PlayerHandler,
+        'g':self.GameManager
+    };
+
+    var messageRouter = MG.MessageRouter(components);
 
     var url = window.location.toString();
     self.Player.name = MG.Tools.parseQueryString(url)['user-name'];

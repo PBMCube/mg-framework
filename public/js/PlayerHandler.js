@@ -1,5 +1,5 @@
 (function () {
-    window.MG.PlayerHandlerClass = function (player) {
+    MG.PlayerHandlerClass = function (player) {
         var self = MG.RouterClass();
         self.routingTable = {
             'p': function (msg) {},
